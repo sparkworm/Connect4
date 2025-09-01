@@ -4,10 +4,12 @@
 [ext_resource type="PackedScene" uid="uid://cys0wrhwurt0t" path="res://scenes/level.tscn" id="2_0wfyh"]
 
 [node name="Main" type="Node"]
+process_mode = 3
 script = ExtResource("1_o5qli")
 level = ExtResource("2_0wfyh")
 
 [node name="GameLayer" type="CanvasLayer" parent="."]
+process_mode = 1
 follow_viewport_enabled = true
 
 [node name="PauseMenuLayer" type="CanvasLayer" parent="."]
