@@ -39,13 +39,13 @@ func pick_best_move() -> int:
 ## [br][br]
 ## -1 means the move is an instant win,
 ## [br]-2 indicates that the move will block an opponent victory
-## [br]-3 indicates that the move is not possible (NOTE: this should never be chosen for move as default
-## is 0, so -3 will never be greater
-## [br]otherwise, the higher the better
+## [br]-3 indicates that the move will be a BLUNDER, leading to an opponent victory next turn
+## [br]-4 indicates that the move is not possible 
+## NOTE: these last two should never be chosen for move unless no other options exist
 func evaluate_move(col:int) -> int:
 	# cancel if col is invalid
 	if col < 0 or col >= board.columns.size() or board.columns[col].is_full():
-		return -3
+		return -4
 
 	# A higher score means a more prioritized move
 	var score:= 0
@@ -77,6 +77,16 @@ func evaluate_move(col:int) -> int:
 			return -1
 		if possible_in_line > 3:
 			score += in_line - 1 # since in_line will always be at least one, subtract one
+	
+	# check if move is a blunder
+	if not board.columns[col].is_full():
+		enemy_piece_location = board.add_piece(col, Globals.get_opposing_team(team))
+		var is_blunder: bool = board.check_win(enemy_piece_location)
+		board.remove_piece(enemy_piece_location)
+		if is_blunder:
+			board.remove_piece(piece_location)
+			print("blunder found on col ", col)
+			return -3
 	board.remove_piece(piece_location)
 
 	return score
