@@ -8,9 +8,8 @@ var board: Board
 ## returns the col that the piece will be played in.
 ## TODO: game needs to assure that there are viable moves
 func take_turn() -> void:
-	print("AI move: ", pick_best_move())
 	var best_move := pick_best_move()
-	#board.print_board()
+	print("AI move: ", best_move)
 	move_made.emit(best_move)
 	#print("after move")
 	#board.print_board()
@@ -48,6 +47,9 @@ func evaluate_move(col:int) -> int:
 	if col < 0 or col >= board.columns.size() or board.columns[col].is_full():
 		return -3
 
+	# A higher score means a more prioritized move
+	var score:= 0
+
 	# check to see if the enemy would win if they played here
 	# WARNING: only works with one enemy in this state
 	var enemy_piece_location: Vector2i = board.add_piece(col, Globals.get_opposing_team(team))
@@ -57,12 +59,11 @@ func evaluate_move(col:int) -> int:
 		if in_line >=4:
 			board.remove_piece(enemy_piece_location)
 			return -2
+		# add points to score for blocking
+		# NOTE: might want to reweight to value more or less than score from offense
+		score += in_line - 1
 	board.remove_piece(enemy_piece_location)
 
-	# calculate score
-	var score:= 0
-	#var new_board: Board = board.duplicate()
-	#new_board.columns = board.columns.duplicate(true) # WARNING: may only be references
 	var piece_location: Vector2i = board.add_piece(col, team)
 	for dir:Vector2i in Globals.DIRECTIONS:
 		var in_line: int = board.count_pieces_in_line(piece_location, dir)
