@@ -3,6 +3,7 @@ extends Node
 
 var columns: Array[Column]
 
+
 ## Creates empty board of specified dimensions
 func initialize_board(width:=7, height:=6):
 	for col in range(width):
@@ -88,3 +89,9 @@ func print_board() -> void:
 		for x in range(columns.size()):
 			col_str += str(get_piece_at(Vector2i(x,y)))
 		print(col_str)
+
+func check_draw() -> bool:
+	for col: Column in columns:
+		if not col.is_full():
+			return false
+	return true

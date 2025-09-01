@@ -25,6 +25,7 @@ func _ready() -> void:
 	game = Game.new([player1, player2])
 
 	game.player_won.connect(game_won)
+	game.game_tied.connect(game_tied)
 	game.piece_dropped.connect(drop_piece)
 
 func _process(delta: float) -> void:
@@ -56,5 +57,10 @@ func drop_piece(team: Globals.Team, pos: Vector2i) -> void:
 
 func game_won(_winner: Player) -> void:
 	win_label.text = "Player " + str(game.active_player_idx+1) + " won!"
+	popup_layer.show()
+	game_active = false
+
+func game_tied() -> void:
+	win_label.text = "Game is a draw!"
 	popup_layer.show()
 	game_active = false

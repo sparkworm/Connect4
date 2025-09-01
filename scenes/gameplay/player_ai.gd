@@ -85,7 +85,6 @@ func evaluate_move(col:int) -> int:
 		board.remove_piece(enemy_piece_location)
 		if is_blunder:
 			board.remove_piece(piece_location)
-			print("blunder found on col ", col)
 			return -3
 	board.remove_piece(piece_location)
 

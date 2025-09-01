@@ -5,6 +5,7 @@ extends Node
 signal piece_dropped(color: Globals.Team, land_pos: Vector2i)
 signal active_player_changed(new_player: Player)
 signal player_won(winner: Player)
+signal game_tied
 
 ## holds all players (probably 2)
 var players: Array[Player]
@@ -42,6 +43,8 @@ func make_player_move(col: int) -> Vector2i:
 	# ensures that game won't go to
 	#else:
 		#next_player()
+	if board.check_draw():
+		game_tied.emit()
 	return land_pos
 
 func next_player() -> void:
