@@ -1,0 +1,18 @@
+[gd_scene load_steps=5 format=3 uid="uid://dl1bl6wveemse"]
+
+[ext_resource type="Texture2D" uid="uid://b2oxspg4qgi6u" path="res://textures/board_tiles.png" id="1_bw1hf"]
+[ext_resource type="Script" uid="uid://do82srci14ox0" path="res://scenes/game_piece/visible_board.gd" id="2_d44l7"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_d44l7"]
+texture = ExtResource("1_bw1hf")
+texture_region_size = Vector2i(32, 32)
+1:1/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_ioyxi"]
+tile_size = Vector2i(32, 32)
+sources/0 = SubResource("TileSetAtlasSource_d44l7")
+
+[node name="VisibleBoard" type="TileMapLayer"]
+modulate = Color(0, 0, 0.49, 1)
+tile_set = SubResource("TileSet_ioyxi")
+script = ExtResource("2_d44l7")

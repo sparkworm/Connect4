@@ -1,0 +1,42 @@
+[gd_scene load_steps=4 format=3 uid="uid://cys0wrhwurt0t"]
+
+[ext_resource type="PackedScene" uid="uid://dl1bl6wveemse" path="res://scenes/game_piece/visible_board.tscn" id="1_2q6dc"]
+[ext_resource type="Script" uid="uid://dkvouwbj3l10d" path="res://scenes/level.gd" id="1_w7c3h"]
+[ext_resource type="PackedScene" uid="uid://mv58kek3n7f" path="res://scenes/game_piece/piece.tscn" id="2_w8frs"]
+
+[node name="Level" type="Node2D"]
+script = ExtResource("1_w7c3h")
+piece_scene = ExtResource("2_w8frs")
+
+[node name="PieceHolder" type="Node2D" parent="."]
+
+[node name="VisibleBoard" parent="." instance=ExtResource("1_2q6dc")]
+
+[node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(3, 3)
+
+[node name="PopupLayer" type="CanvasLayer" parent="."]
+visible = false
+
+[node name="PanelContainer" type="PanelContainer" parent="PopupLayer"]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -58.0
+offset_right = 58.0
+offset_bottom = 40.0
+grow_horizontal = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="PopupLayer/PanelContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 6
+theme_override_constants/margin_top = 6
+theme_override_constants/margin_right = 6
+theme_override_constants/margin_bottom = 6
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PopupLayer/PanelContainer/MarginContainer"]
+layout_mode = 2
+
+[node name="WinLabel" type="Label" parent="PopupLayer/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Player X won!"

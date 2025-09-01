@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://mv58kek3n7f"]
+
+[ext_resource type="Texture2D" uid="uid://cn35j50tc23qt" path="res://textures/piece.png" id="1_3l2tu"]
+[ext_resource type="Script" uid="uid://d10xt5quicqt8" path="res://scenes/game_piece/piece.gd" id="2_ejsuq"]
+
+[node name="Piece" type="Sprite2D"]
+scale = Vector2(1.025, 1.025)
+texture = ExtResource("1_3l2tu")
+offset = Vector2(0.5, 0.5)
+script = ExtResource("2_ejsuq")
