@@ -52,8 +52,9 @@ func drop_piece(team: Globals.Team, pos: Vector2i) -> void:
 	final_pos += Vector2(visible_board.tile_set.tile_size) / 2
 	var drop_time: float = (final_pos.y - new_piece.position.y) / drop_speed
 	piece_drop_tween.tween_property(new_piece, "position", final_pos, drop_time)
+	piece_drop_tween.tween_callback(game.next_player)
 
-func game_won(winner: Player) -> void:
+func game_won(_winner: Player) -> void:
 	win_label.text = "Player " + str(game.active_player_idx+1) + " won!"
 	popup_layer.show()
 	game_active = false

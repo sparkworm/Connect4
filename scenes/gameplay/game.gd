@@ -29,6 +29,7 @@ func _init(player_list: Array[Player]) -> void:
 func get_active_player_team() -> Globals.Team:
 	return get_active_player().team
 
+## Makes a move in the specified column
 func make_player_move(col: int) -> Vector2i:
 	var land_pos := board.add_piece(col, get_active_player_team())
 	#print("\n\n")
@@ -39,8 +40,8 @@ func make_player_move(col: int) -> Vector2i:
 		player_won.emit(get_active_player())
 		print("PLAYER ", active_player_idx+1, " HAS WON!")
 	# ensures that game won't go to
-	else:
-		next_player()
+	#else:
+		#next_player()
 	return land_pos
 
 func next_player() -> void:

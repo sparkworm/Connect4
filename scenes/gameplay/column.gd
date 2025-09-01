@@ -28,7 +28,6 @@ func add_piece(team: Globals.Team) -> int:
 	pieces[pieces.size()-1] = team
 	return pieces.size()-1
 	print("NO SPOT FOUND?")
-	return -1
 
 ## Returns the piece at the location indicated, with idx==0 being at the top of the column
 func get_piece(idx:int) -> Globals.Team:
