@@ -8,7 +8,6 @@ var columns: Array[Column]
 func initialize_board(width:=7, height:=6):
 	for col in range(width):
 		columns.append(Column.new(height))
-	print("columns size: ", columns.size())
 
 ## Return the number of same-colored pieces in the row specified by a piece therin and the 
 ## direction of the row.

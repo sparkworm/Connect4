@@ -32,4 +32,3 @@ func _on_button_quit_pressed() -> void:
 func toggle_pause() -> void:
 	pause_menu_layer.visible = not pause_menu_layer.visible
 	get_tree().paused = not get_tree().paused
-	print(get_tree().paused)

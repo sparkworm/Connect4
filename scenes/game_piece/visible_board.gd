@@ -13,5 +13,4 @@ func get_mouse_col() -> int:
 	var col_pos: int = mouse_pos.x / tile_set.tile_size.x
 	if col_pos >= Globals.COL_AMNT or mouse_pos.x < 0:
 		col_pos = -1
-	print(col_pos)
 	return col_pos

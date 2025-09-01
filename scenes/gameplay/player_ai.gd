@@ -9,10 +9,7 @@ var board: Board
 ## TODO: game needs to assure that there are viable moves
 func take_turn() -> void:
 	var best_move := pick_best_move()
-	print("AI move: ", best_move)
 	move_made.emit(best_move)
-	#print("after move")
-	#board.print_board()
 
 ## Calls evaluate_move() on all available moves to determine the best course of action
 func pick_best_move() -> int:
@@ -22,7 +19,7 @@ func pick_best_move() -> int:
 	var block_col := -1
 	for col in range(Globals.COL_AMNT): # NOTICE: maybe change to game columns?
 		var col_score: int = evaluate_move(col)
-		print("Col ", col, " score: ", col_score)
+		#print("Col ", col, " score: ", col_score)
 		# -1 indicates that the move is an instant win
 		if col_score == -1:
 			return col

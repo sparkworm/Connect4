@@ -33,16 +33,10 @@ func get_active_player_team() -> Globals.Team:
 ## Makes a move in the specified column
 func make_player_move(col: int) -> Vector2i:
 	var land_pos := board.add_piece(col, get_active_player_team())
-	#print("\n\n")
-	#for dir: Vector2i in Globals.DIRECTIONS:
-		#print("in line ", dir, " : ", board.count_pieces_in_line(land_pos, dir))
 	piece_dropped.emit(get_active_player_team(), land_pos)
 	if board.check_win(land_pos):
 		player_won.emit(get_active_player())
-		print("PLAYER ", active_player_idx+1, " HAS WON!")
 	# ensures that game won't go to
-	#else:
-		#next_player()
 	if board.check_draw():
 		game_tied.emit()
 	return land_pos
