@@ -9,10 +9,9 @@ func initialize_board(width:=7, height:=6):
 		columns.append(Column.new(height))
 	print("columns size: ", columns.size())
 
-## A meaty function that should determine the number of same-colored pieces in the row specified by
-## a piece therin and the direction.
-## [br]will check in direction and opposite direction
-## REQUIRES TESTING
+## Return the number of same-colored pieces in the row specified by a piece therin and the 
+## direction of the row.
+## [br]NOTE: will check in direction and opposite direction to get full row
 func count_pieces_in_line(piece_coords: Vector2i, dir: Vector2i) -> int:
 	var count: int = 1
 	var next_coords := piece_coords + dir
@@ -24,6 +23,26 @@ func count_pieces_in_line(piece_coords: Vector2i, dir: Vector2i) -> int:
 	next_coords = piece_coords - dir
 	while (is_location_valid(next_coords) \
 			and get_piece_at(next_coords) == get_piece_at(piece_coords)):
+		count += 1
+		next_coords -= dir
+	return count
+
+## TODO: Consider combining this with count_pieces_in_line() since the two perform the same looping
+## Returns the maximium length a row of the specified color could get before being blocked by an
+## enemy piece or running off the board
+func row_max_length(piece_coords: Vector2i, dir: Vector2i) -> int:
+	var count: int = 1
+	var next_coords := piece_coords + dir
+	#WARNING: make sure that this terminates if first part is false
+	while (is_location_valid(next_coords) \
+			and (get_piece_at(next_coords) == get_piece_at(piece_coords) \
+			or get_piece_at(next_coords) == Globals.Team.EMPTY)):
+		count += 1
+		next_coords += dir
+	next_coords = piece_coords - dir
+	while (is_location_valid(next_coords) \
+			and (get_piece_at(next_coords) == get_piece_at(piece_coords) \
+			or get_piece_at(next_coords) == Globals.Team.EMPTY)):
 		count += 1
 		next_coords -= dir
 	return count

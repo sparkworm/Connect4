@@ -1,3 +1,4 @@
+## Manages the players and board of a given game
 class_name Game
 extends Node
 
@@ -18,8 +19,8 @@ func _init(player_list: Array[Player]) -> void:
 
 	players = player_list
 	for player: Player in players:
+		# if the player is an AI, set their board property to reference board
 		if player is PlayerAI:
-			print("clanker found")
 			player.board = board
 
 	for player: Player in players:
