@@ -55,13 +55,16 @@ func evaluate_move(col:int) -> int:
 	var enemy_piece_location: Vector2i = board.add_piece(col, Globals.get_opposing_team(team))
 	for dir:Vector2i in Globals.DIRECTIONS:
 		var in_line: int = board.count_pieces_in_line(enemy_piece_location, dir)
+		var possible_in_line: int = board.row_max_length(enemy_piece_location, dir)
 		# check enemy win
 		if in_line >=4:
 			board.remove_piece(enemy_piece_location)
 			return -2
-		# add points to score for blocking
-		# NOTE: might want to reweight to value more or less than score from offense
-		score += in_line - 1
+		# only count defense if enemy could score with it
+		if possible_in_line > 3:
+			# add points to score for blocking
+			# NOTE: might want to reweight to value more or less than score from offense
+			score += in_line - 1
 	board.remove_piece(enemy_piece_location)
 
 	var piece_location: Vector2i = board.add_piece(col, team)
