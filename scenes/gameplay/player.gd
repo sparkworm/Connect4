@@ -2,6 +2,7 @@ class_name Player
 extends Node
 
 ## Signal indicating that the player has made a move.  Notably unused with PlayerHuman
+@warning_ignore("unused_signal")
 signal move_made(col: int)
 
 var team: Globals.Team

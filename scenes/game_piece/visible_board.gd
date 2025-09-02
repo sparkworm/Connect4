@@ -10,6 +10,7 @@ func create_board(dimensions: Vector2i) -> void:
 ## Returns which column the mouse resides over.  Returns -1 if it is over no column
 func get_mouse_col() -> int:
 	var mouse_pos := get_local_mouse_position()
+	@warning_ignore("narrowing_conversion")
 	var col_pos: int = mouse_pos.x / tile_set.tile_size.x
 	if col_pos >= Globals.COL_AMNT or mouse_pos.x < 0:
 		col_pos = -1

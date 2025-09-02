@@ -31,12 +31,11 @@ func _ready() -> void:
 	if player1 is PlayerAI:
 		player1.take_turn()
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	if Input.is_action_just_pressed("drop_piece") and game.is_active_player_human() and game_active:
 		var col := visible_board.get_mouse_col()
 		if col != -1:
-			var color := game.get_active_player_team()
-			var land_pos := game.make_player_move(col)
+			game.make_player_move(col)
 
 
 ## Animates the dropping of a piece to the specified position.
