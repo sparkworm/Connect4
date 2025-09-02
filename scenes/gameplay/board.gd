@@ -89,8 +89,14 @@ func print_board() -> void:
 			col_str += str(get_piece_at(Vector2i(x,y)))
 		print(col_str)
 
-func check_draw() -> bool:
+func is_board_full() -> bool:
 	for col: Column in columns:
 		if not col.is_full():
+			return false
+	return true
+
+func is_board_empty() -> bool:
+	for col: Column in columns:
+		if not col.pieces[col.pieces.size()-1] == Globals.Team.EMPTY:
 			return false
 	return true

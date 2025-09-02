@@ -13,6 +13,10 @@ func take_turn() -> void:
 
 ## Calls evaluate_move() on all available moves to determine the best course of action
 func pick_best_move() -> int:
+	# play in the middle if the ai is the first player
+	if board.is_board_empty():
+		return 3
+	
 	var best_score := 0
 	var best_col := -1
 	# set to column where enemy can be blocked, stays -1 if there are none

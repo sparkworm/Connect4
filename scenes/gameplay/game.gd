@@ -33,12 +33,12 @@ func get_active_player_team() -> Globals.Team:
 ## Makes a move in the specified column
 func make_player_move(col: int) -> Vector2i:
 	var land_pos := board.add_piece(col, get_active_player_team())
-	piece_dropped.emit(get_active_player_team(), land_pos)
 	if board.check_win(land_pos):
 		player_won.emit(get_active_player())
 	# ensures that game won't go to
-	if board.check_draw():
+	if board.is_board_full():
 		game_tied.emit()
+	piece_dropped.emit(get_active_player_team(), land_pos)
 	return land_pos
 
 func next_player() -> void:
