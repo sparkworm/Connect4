@@ -19,17 +19,22 @@ func _ready() -> void:
 	visible_board.position = -visible_board.tile_set.tile_size * dimensions / 2
 
 	# create players
+	
 	var player1 = PlayerHuman.new(Globals.Team.RED)
 	var player2 = PlayerAI.new(Globals.Team.BLUE)
+	add_players([player1,player2])
 
-	game = Game.new([player1, player2])
+
+## Adds players and creates Game with given players
+func add_players(player_arr: Array[Player]) -> void:
+	game = Game.new([player_arr[0], player_arr[1]])
 
 	game.player_won.connect(game_won)
 	game.game_tied.connect(game_tied)
 	game.piece_dropped.connect(drop_piece)
 
-	if player1 is PlayerAI:
-		player1.take_turn()
+	if player_arr[0] is PlayerAI:
+		player_arr[0].take_turn()
 
 func _process(_delta: float) -> void:
 	if Input.is_action_just_pressed("drop_piece") and game.is_active_player_human() and game_active:
