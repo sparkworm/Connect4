@@ -13,6 +13,7 @@ process_mode = 1
 follow_viewport_enabled = true
 
 [node name="PauseMenuLayer" type="CanvasLayer" parent="."]
+layer = 2
 
 [node name="PanelContainer" type="PanelContainer" parent="PauseMenuLayer"]
 anchors_preset = 8
