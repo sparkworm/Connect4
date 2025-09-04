@@ -7,6 +7,8 @@
 [node name="Level" type="Node2D"]
 script = ExtResource("1_w7c3h")
 piece_scene = ExtResource("2_w8frs")
+p1_team = 1
+p2_team = 2
 
 [node name="PieceHolder" type="Node2D" parent="."]
 
@@ -16,9 +18,9 @@ piece_scene = ExtResource("2_w8frs")
 zoom = Vector2(3, 3)
 
 [node name="PopupLayer" type="CanvasLayer" parent="."]
-visible = false
 
-[node name="PanelContainer" type="PanelContainer" parent="PopupLayer"]
+[node name="GameOverPanel" type="PanelContainer" parent="PopupLayer"]
+visible = false
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
@@ -27,16 +29,66 @@ offset_right = 58.0
 offset_bottom = 40.0
 grow_horizontal = 2
 
-[node name="MarginContainer" type="MarginContainer" parent="PopupLayer/PanelContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="PopupLayer/GameOverPanel"]
 layout_mode = 2
 theme_override_constants/margin_left = 6
 theme_override_constants/margin_top = 6
 theme_override_constants/margin_right = 6
 theme_override_constants/margin_bottom = 6
 
-[node name="VBoxContainer" type="VBoxContainer" parent="PopupLayer/PanelContainer/MarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="PopupLayer/GameOverPanel/MarginContainer"]
 layout_mode = 2
 
-[node name="WinLabel" type="Label" parent="PopupLayer/PanelContainer/MarginContainer/VBoxContainer"]
+[node name="WinLabel" type="Label" parent="PopupLayer/GameOverPanel/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 text = "Player X won!"
+
+[node name="PlayerSelect" type="ColorRect" parent="PopupLayer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.1, 0.1, 0.1, 0.317647)
+
+[node name="PlayerSelectPanel" type="PanelContainer" parent="PopupLayer/PlayerSelect"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -69.0
+offset_top = -56.5
+offset_right = 69.0
+offset_bottom = 56.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="PopupLayer/PlayerSelect/PlayerSelectPanel"]
+layout_mode = 2
+theme_override_constants/margin_left = 6
+theme_override_constants/margin_top = 6
+theme_override_constants/margin_right = 6
+theme_override_constants/margin_bottom = 6
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PopupLayer/PlayerSelect/PlayerSelectPanel/MarginContainer"]
+layout_mode = 2
+
+[node name="P1Checkbox" type="CheckBox" parent="PopupLayer/PlayerSelect/PlayerSelectPanel/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Player 1 is AI"
+
+[node name="P2Checkbox" type="CheckBox" parent="PopupLayer/PlayerSelect/PlayerSelectPanel/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Player 2 is AI"
+
+[node name="ReadyButton" type="Button" parent="PopupLayer/PlayerSelect/PlayerSelectPanel/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Ready"
+
+[connection signal="pressed" from="PopupLayer/PlayerSelect/PlayerSelectPanel/MarginContainer/VBoxContainer/ReadyButton" to="." method="_on_ready_button_pressed"]

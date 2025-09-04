@@ -5,14 +5,21 @@ extends Node2D
 @export var piece_scene: PackedScene
 @export var dimensions := Vector2i(7,6)
 @export var drop_speed := 400.0
+@export var p1_team: Globals.Team
+@export var p2_team: Globals.Team
 
 var game: Game
-var game_active: bool = true
+var game_active: bool = false
 
 @onready var visible_board: VisibleBoard = $VisibleBoard
 @onready var piece_holder: Node2D = $PieceHolder
-@onready var popup_layer: CanvasLayer = $PopupLayer
-@onready var win_label: Label = $PopupLayer/PanelContainer/MarginContainer/VBoxContainer/WinLabel
+#@onready var popup_layer: CanvasLayer = $PopupLayer
+@onready var win_label: Label = %WinLabel
+@onready var game_over_panel: PanelContainer = $PopupLayer/GameOverPanel
+@onready var p1_checkbox: CheckBox = %P1Checkbox
+@onready var p2_checkbox: CheckBox = %P2Checkbox
+#@onready var player_select_panel: PanelContainer = $PopupLayer/PlayerSelectPanel
+@onready var player_select: ColorRect = $PopupLayer/PlayerSelect
 
 func _ready() -> void:
 	visible_board.create_board(dimensions)
@@ -20,9 +27,9 @@ func _ready() -> void:
 
 	# create players
 	
-	var player1 = PlayerHuman.new(Globals.Team.RED)
-	var player2 = PlayerAI.new(Globals.Team.BLUE)
-	add_players([player1,player2])
+	#var player1 = PlayerHuman.new(Globals.Team.RED)
+	#var player2 = PlayerAI.new(Globals.Team.BLUE)
+	#add_players([player1,player2])
 
 
 ## Adds players and creates Game with given players
@@ -37,7 +44,7 @@ func add_players(player_arr: Array[Player]) -> void:
 		player_arr[0].take_turn()
 
 func _process(_delta: float) -> void:
-	if Input.is_action_just_pressed("drop_piece") and game.is_active_player_human() and game_active:
+	if game_active and Input.is_action_just_pressed("drop_piece") and game.is_active_player_human():
 		var col := visible_board.get_mouse_col()
 		if col != -1:
 			game.make_player_move(col)
@@ -64,10 +71,28 @@ func drop_piece(team: Globals.Team, pos: Vector2i) -> void:
 
 func game_won(_winner: Player) -> void:
 	win_label.text = "Player " + str(game.active_player_idx+1) + " won!"
-	popup_layer.show()
+	game_over_panel.show()
 	game_active = false
 
 func game_tied() -> void:
 	win_label.text = "Game is a draw!"
-	popup_layer.show()
+	game_over_panel.show()
 	game_active = false
+
+
+func _on_ready_button_pressed() -> void:
+	var p1: Player
+	var p2: Player
+	if p1_checkbox.button_pressed:
+		p1 = PlayerAI.new(p1_team)
+	else:
+		p1 = PlayerHuman.new(p1_team)
+	
+	if p2_checkbox.button_pressed:
+		p2 = PlayerAI.new(p2_team)
+	else:
+		p2 = PlayerHuman.new(p2_team)
+	
+	player_select.hide()
+	game_active = true
+	add_players([p1,p2])
